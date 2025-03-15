@@ -1,20 +1,31 @@
 import { AnalyticsDto } from '../dto/analytics.dto.ts'
+import { useEffect, useState } from 'react'
 
 interface AnalyticsProps {
   analytics: AnalyticsDto
   handleDelete: () => void
-  refetch: (p: { force: boolean }) => void
+  refetch: () => void
 }
 
 export default function Analytics({ analytics, handleDelete, refetch }: AnalyticsProps) {
-  const handleOpenShortUrl = async () => {
+  const [shouldRefetch, setShouldRefetch] = useState(false)
+
+  const handleOpenShortUrl = () => {
+    setShouldRefetch(true)
     const url = `${import.meta.env.VITE_BACKEND_URL}/${analytics.shortUrl}`
     window.open(url, '_blank')
-
-    refetch({ force: true })
   }
 
-  if (!analytics) return null
+  useEffect(() => {
+    const onFocus = () => {
+      if (shouldRefetch) {
+        refetch()
+        setShouldRefetch(false)
+      }
+    }
+    window.addEventListener('focus', onFocus)
+    return () => window.removeEventListener('focus', onFocus)
+  }, [shouldRefetch, refetch])
 
   return (
     <div className="border rounded p-4">
