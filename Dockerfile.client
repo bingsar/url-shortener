@@ -1,0 +1,14 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY ./client/package.json ./client/yarn.lock ./
+RUN yarn install
+
+COPY ./client ./
+
+RUN yarn build
+
+RUN yarn global add serve
+
+CMD ["serve", "-s", "dist", "-l", "5173"]
