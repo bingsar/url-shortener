@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, Res, Delete, Ip, Req } from '@nestjs/common'
+import { Controller, Post, Body, Get, Param, Res, Delete, Ip } from '@nestjs/common'
 import { UrlsService } from './urls.service'
 import { CreateUrlDto } from './dto/create-url.dto'
 import { Response } from 'express'
@@ -18,7 +18,7 @@ export class UrlsController {
   async redirectToOriginal(
     @Param('shortUrl') shortUrl: string,
     @Res() res: Response,
-    @Ip() ip: string
+    @Ip() ip: string,
   ) {
     const ipAddress = convertToIpv4(ip)
     const originalUrl = await this.urlsService.findOriginalUrl(shortUrl, ipAddress)

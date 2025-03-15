@@ -62,9 +62,7 @@ export default function App() {
       )}
 
       {createError && (
-        <div className="bg-red-100 p-2 rounded mb-2">
-          Error: {getErrorMessage(createError)}
-        </div>
+        <div className="bg-red-100 p-2 rounded mb-2">Error: {getErrorMessage(createError)}</div>
       )}
 
       <div className="flex gap-2 mb-4">
@@ -82,9 +80,7 @@ export default function App() {
       {isFetching && <p>Loading analytics...</p>}
 
       {analyticsError && (
-        <div className="bg-red-100 p-2 rounded mb-4">
-          Error: {getErrorMessage(analyticsError)}
-        </div>
+        <div className="bg-red-100 p-2 rounded mb-4">Error: {getErrorMessage(analyticsError)}</div>
       )}
 
       {analytics && !analyticsError && (
