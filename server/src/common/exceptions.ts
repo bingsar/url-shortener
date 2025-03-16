@@ -1,19 +1,8 @@
-import { NotFoundException, GoneException, ConflictException } from '@nestjs/common'
+import { HttpException, HttpStatus } from '@nestjs/common'
 
-export class UrlNotFoundException extends NotFoundException {
-  constructor() {
-    super('URL not found')
-  }
-}
+export const UrlNotFoundException = () => new HttpException('URL not found', HttpStatus.NOT_FOUND)
 
-export class UrlExpiredException extends GoneException {
-  constructor() {
-    super('URL expired')
-  }
-}
+export const UrlExpiredException = () => new HttpException('URL expired', HttpStatus.GONE)
 
-export class AliasAlreadyExistsException extends ConflictException {
-  constructor() {
-    super('Alias already exists')
-  }
-}
+export const AliasAlreadyExistsException = () =>
+  new HttpException('Alias already exists', HttpStatus.CONFLICT)
