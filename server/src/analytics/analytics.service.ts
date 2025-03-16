@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Analytics } from './analytics.entity'
 import { Url } from '../urls/url.entity'
-import { UrlNotFoundException } from '../common/exceptions'
+import { UrlExpiredException, UrlNotFoundException } from '../common/exceptions'
 
 @Injectable()
 export class AnalyticsService {
@@ -28,7 +28,11 @@ export class AnalyticsService {
     const url = await this.urlRepository.findOne({ where: { shortUrl }, relations: ['analytics'] })
 
     if (!url) {
-      throw new UrlNotFoundException()
+      throw UrlNotFoundException()
+    }
+
+    if (url.expiresAt && new Date(url.expiresAt) < new Date()) {
+      throw UrlExpiredException()
     }
 
     const recentClicks = await this.analyticsRepository.find({

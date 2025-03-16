@@ -27,7 +27,7 @@ export class UrlsService {
     const existingUrl = await this.urlRepository.findOne({ where: { shortUrl } })
 
     if (existingUrl) {
-      throw new AliasAlreadyExistsException()
+      throw AliasAlreadyExistsException()
     }
 
     const url = this.urlRepository.create({
@@ -43,11 +43,11 @@ export class UrlsService {
     const url = await this.urlRepository.findOne({ where: { shortUrl } })
 
     if (!url) {
-      throw new UrlNotFoundException()
+      throw UrlNotFoundException()
     }
 
     if (url.expiresAt && new Date(url.expiresAt) < new Date()) {
-      throw new UrlExpiredException()
+      throw UrlExpiredException()
     }
 
     url.clickCount += 1
@@ -64,7 +64,7 @@ export class UrlsService {
     const url = await this.urlRepository.findOne({ where: { shortUrl } })
 
     if (!url) {
-      throw new UrlNotFoundException()
+      throw UrlNotFoundException()
     }
 
     return {
@@ -78,7 +78,7 @@ export class UrlsService {
     const url = await this.urlRepository.findOne({ where: { shortUrl } })
 
     if (!url) {
-      throw new UrlNotFoundException()
+      throw UrlNotFoundException()
     }
 
     await this.urlRepository.delete(url.id)

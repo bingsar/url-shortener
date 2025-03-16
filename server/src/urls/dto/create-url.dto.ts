@@ -1,6 +1,7 @@
 import { IsUrl, IsOptional, IsDateString, MaxLength, Matches, Validate } from 'class-validator'
 import { Transform } from 'class-transformer'
 import { UrlProtocolValidator } from '../../common/validators/url-protocol.validator'
+import { IsFutureDate } from '../../common/validators/is-future-date.validator'
 
 export class CreateUrlDto {
   @IsUrl({}, { message: 'Invalid URL format.' })
@@ -9,6 +10,7 @@ export class CreateUrlDto {
 
   @IsOptional()
   @IsDateString({}, { message: 'Invalid date format.' })
+  @IsFutureDate({ message: 'expiresAt must be date in future' })
   expiresAt?: string
 
   @IsOptional()

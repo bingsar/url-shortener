@@ -9,3 +9,7 @@ export const getErrorMessage = (error: FetchBaseQueryError | SerializedError): s
   }
   return 'An unknown error occurred.'
 }
+
+export const getMinDate = () => {
+  return new Date().toISOString().slice(0, 10)
+}
